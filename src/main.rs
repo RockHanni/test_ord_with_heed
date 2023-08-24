@@ -53,7 +53,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let binding = total.last().unwrap().clone().0.store();
     let end = binding.as_slice();
 
-    let rets: Vec<(&[u8], _)> = db.range(&rtx, &(start..end))?.collect()?;
+    let rets: Vec<(&[u8], _)> = db.range(&rtx, &(start..=end))?.collect()?;
 
     let re_total = rets
         .into_iter()
