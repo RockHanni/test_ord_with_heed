@@ -47,11 +47,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let rtx =env.read_txn()?;
 
-    let binding = total.first().unwrap().clone().0.store();
-    let start = binding.as_slice();
+    let start = total.first().unwrap().clone().0.store();
+    // let start = binding.as_slice();
 
-    let binding = total.last().unwrap().clone().0.store();
-    let end = binding.as_slice();
+    let end = total.last().unwrap().clone().0.store();
+    // let end = binding.as_slice();
 
     let rets: Vec<(&[u8], _)> = db.range(&rtx, &(&start..=&end))?.collect()?;
 
