@@ -53,17 +53,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let binding = total.last().unwrap().clone().0.store();
     let end = binding.as_slice();
 
-    let rets: Result<Vec<(&[u8], &[u8])>, _> = db
-        .iter(&rtx)
-        .and_then(|iter| {
-            let filtered_results = iter
-                .filter_map(|result| result.ok()) // Filter out Err variants
-                .filter(|(key, _)| key >= &start && key <= &end)
-                .collect::<Vec<_>>();
-
-            Ok(filtered_results)
-        });
-    let rets = rets?;
+    let rets: Vec<(&[u8], _)> = db.range(&wtxn, &(start..end))?.collect()?;
 
     let re_total = rets
         .into_iter()
