@@ -55,6 +55,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     wtx.commit().unwrap();
 
     let rtx =env.read_txn()?;
+    let wtx = env.write_txn()?;
 
     // let start = total.first().unwrap().clone().0.store();
     let start = total.first().unwrap().clone().0.store();
@@ -74,6 +75,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         rets.push((sat_point, inscription_id))
     }
     assert_eq!(total, rets);
+    println!("{:?}", rets);
 
     let mut rets2 = vec![];
     for range in db2.range(&rtx, &(0..=9))? {
